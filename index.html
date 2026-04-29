@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse Nation Roleplay</title>
+  <meta name="description" content="Pulse Nation Roleplay - GTA5 FiveM RP Server. Wo RP noch ein RP ist." />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #080811;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      background: rgba(6, 6, 14, 0.72);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #e8d6ff;
+    }
+
+    .brand img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 0.95rem;
+      color: #d7d7e8;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a:hover {
+      color: #b967ff;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background:
+        linear-gradient(90deg, rgba(5, 5, 12, 0.92), rgba(10, 0, 30, 0.55), rgba(5, 5, 12, 0.88)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.15), #080811),
+        url("hintergrund.jpg") center/cover no-repeat;
+      overflow: hidden;
+      padding-top: 76px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 40% 40%, rgba(177, 76, 255, 0.25), transparent 35%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 48px;
+      padding: 80px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(194, 119, 255, 0.4);
+      background: rgba(194, 119, 255, 0.13);
+      color: #ead8ff;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .glow {
+      color: #c77dff;
+      text-shadow: 0 0 28px rgba(199, 125, 255, 0.55);
+    }
+
+    .hero-text {
+      max-width: 680px;
+      color: #deddec;
+      font-size: 1.15rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 24px;
+      border-radius: 14px;
+      font-weight: 900;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8f39ff, #18d8ff);
+      box-shadow: 0 0 30px rgba(143, 57, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(24, 216, 255, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.13);
+      transform: translateY(-2px);
+    }
+
+    .quick-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .stat {
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-width: 140px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.35rem;
+      color: #65e8ff;
+    }
+
+    .stat span {
+      color: #cfd1df;
+      font-size: 0.9rem;
+    }
+
+    .hero-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-logo img {
+      width: min(440px, 90%);
+      filter: drop-shadow(0 0 38px rgba(176, 85, 255, 0.45));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    section {
+      padding: 92px 0;
+    }
+
+    .section-heading {
+      max-width: 780px;
+      margin-bottom: 40px;
+    }
+
+    .eyebrow {
+      color: #65e8ff;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-heading p {
+      color: #c8c9d8;
+      font-size: 1.05rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .card:hover {
+      border-color: rgba(199, 125, 255, 0.35);
+    }
+
+    .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      color: #ead8ff;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .card p, .card li {
+      color: #d3d4e3;
+    }
+
+    .card ul {
+      margin-top: 10px;
+      padding-left: 18px;
+    }
+
+    .dark-band {
+      background:
+        radial-gradient(circle at top left, rgba(143, 57, 255, 0.15), transparent 34%),
+        rgba(255, 255, 255, 0.025);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .news-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 18px 0;
+    }
+
+    .news-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .news-date {
+      color: #65e8ff;
+      font-weight: 900;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding: 0;
+    }
+
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      min-width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #8f39ff, #18d8ff);
+      font-weight: 900;
+      color: white;
+    }
+
+    .server-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .server-info {
+      background: rgba(0,0,0,0.22);
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.09);
+    }
+
+    .server-info strong {
+      color: #c77dff;
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .cta {
+      text-align: center;
+      border-radius: 30px;
+      padding: 58px 24px;
+      background:
+        linear-gradient(135deg, rgba(143, 57, 255, 0.3), rgba(24, 216, 255, 0.14)),
+        rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 28px 80px rgba(0,0,0,0.3);
+    }
+
+    .cta p {
+      color: #d8d9e8;
+      margin: 0 auto 26px;
+      max-width: 740px;
+      font-size: 1.08rem;
+    }
+
+    footer {
+      padding: 34px 0;
+      text-align: center;
+      color: #9ea1b5;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: #06060d;
+    }
+
+    @media (max-width: 980px) {
+      .hero-content,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-logo {
+        order: -1;
+      }
+
+      .hero-logo img {
+        width: min(300px, 78%);
+      }
+
+      .grid-3,
+      .grid-4,
+      .server-box {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav {
+        height: auto;
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .grid-3,
+      .grid-4,
+      .server-box {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        gap: 12px;
+        font-size: 0.86rem;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      section {
+        padding: 70px 0;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top">
+        <img src="logo.png" alt="Pulse Nation Logo" />
+        <span>Pulse Nation RP</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#server">Server</a>
+        <a href="#features">Features</a>
+        <a href="#fraktionen">Fraktionen</a>
+        <a href="#news">News</a>
+        <a href="#einreise">Einreise</a>
+        <a href="#join">Join</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="container hero-content">
+        <div>
+          <div class="badge">FiveM • GTA V • Voice RP</div>
+          <h1>Wo RP noch <span class="glow">ein RP</span> ist.</h1>
+          <p class="hero-text">
+            Nicht perfekt. Nicht fertig. Aber echt. Pulse Nation Roleplay ist ein Server für Spieler,
+            die Community, Story und echtes Roleplay suchen — statt Masse, Pay-To-Win und Script-Overload.
+          </p>
+
+          <div class="buttons">
+            <a class="btn btn-primary" href="https://discord.gg/KxNgJFgXvh" target="_blank">Discord beitreten</a>
+            <a class="btn btn-secondary" href="#einreise">Einreise ansehen</a>
+            <a class="btn btn-secondary" href="fivem://connect/DEINE-SERVER-IP">Server verbinden</a>
+          </div>
+
+          <div class="quick-stats">
+            <div class="stat">
+              <strong>10/64</strong>
+              <span>aktuell gelistet</span>
+            </div>
+            <div class="stat">
+              <strong>17–25</strong>
+              <span>Prime Time</span>
+            </div>
+            <div class="stat">
+              <strong>300+</strong>
+              <span>Addon Fahrzeuge</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-logo">
+          <img src="logo.png" alt="Pulse Nation Roleplay Logo" />
+        </div>
+      </div>
+    </section>
+
+    <section id="server">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Serverdaten</div>
+          <h2>Pulse Nation Roleplay</h2>
+          <p>
+            Eine Stadt für alle, die wirklich Bock auf Roleplay haben. Aktiv abends,
+            communitynah und mit klarem Fokus auf Qualität statt Quantität.
+          </p>
+        </div>
+
+        <div class="server-box">
+          <div class="server-info">
+            <strong>Teamspeak</strong>
+            <span>94.250.223.22:15063</span>
+          </div>
+          <div class="server-info">
+            <strong>Discord</strong>
+            <span>discord.gg/KxNgJFgXvh</span>
+          </div>
+          <div class="server-info">
+            <strong>Zugang</strong>
+            <span>Öffentlicher Server</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-band" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Warum Pulse Nation?</div>
+          <h2>Community statt Masse.</h2>
+          <p>
+            Während andere Server mit Zahlen um sich werfen, sagen wir es ehrlich:
+            Wir setzen auf Spieler mit echtem Interesse an RP.
+          </p>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="card">
+            <div class="icon">🌆</div>
+            <h3>Echtes Roleplay</h3>
+            <p>17–25 Spieler zur Prime Time, aktiv ab 17/18 Uhr bis Mitternacht. Nicht Masse — sondern Leute mit Bock.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🚗</div>
+            <h3>Realistische Fahrzeuge</h3>
+            <p>300+ Addon Fahrzeuge, kein GTA-Handling und kein unrealistisches Kurvenfliegen mit 300 km/h.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🛠️</div>
+            <h3>Scripts mit Sinn</h3>
+            <p>Eigene Scripts, eigene Maps, eigene Standards. Kein Script-Overload und keine Müllhalde.</p>
+          </div>
+          <div class="card">
+            <div class="icon">⚖️</div>
+            <h3>Fairness</h3>
+            <p>Kein Pay-To-Win, kein Admin-Abuse, keine Gott-Admin-Show. Spieler sind wichtig.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fraktionen">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Fraktionen & Möglichkeiten</div>
+          <h2>Mach es zu deiner Story.</h2>
+          <p>
+            Legal oder illegal, ruhig oder riskant — Los Santos bietet dir viele Wege.
+            Entscheidend ist, was du daraus machst.
+          </p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="icon">🚓</div>
+            <h3>Staatliche Fraktionen</h3>
+            <p>Polizei, Rettungsdienst und weitere offizielle Rollen für Spieler, die Verantwortung übernehmen wollen.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🏢</div>
+            <h3>Firmen & Jobs</h3>
+            <p>Baue Firmen auf, konkurriere mit anderen und verdiene dir deinen Platz in der Wirtschaft.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🌑</div>
+            <h3>Untergrund</h3>
+            <p>Gangs, illegale Wege, Risiko und Machtkämpfe — alles mit Story und Konsequenzen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-band">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Features</div>
+          <h2>Features mit Sinn.</h2>
+          <p>
+            Nicht jedes Script muss rein. Was auf Pulse Nation läuft, soll RP stärken
+            und nicht nur beeindrucken.
+          </p>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="card"><h3>🚗 Fahrverhalten</h3><p>Realistisches Handling mit spürbaren Konsequenzen.</p></div>
+          <div class="card"><h3>🔧 Tuning</h3><p>Tuning mit Risiko, Wirkung und Sinn.</p></div>
+          <div class="card"><h3>🏠 Wohnen</h3><p>Haus- und Wohnungssystem für dein Leben in der Stadt.</p></div>
+          <div class="card"><h3>🐾 Haustiere</h3><p>Haustiere mit Interaktion statt nur Deko.</p></div>
+          <div class="card"><h3>🎰 Aktivitäten</h3><p>Casino, Kartfahren, Tauchen, Jagen und mehr.</p></div>
+          <div class="card"><h3>💼 Wirtschaft</h3><p>Jobs, Firmen, Konkurrenz und angepasste Economy.</p></div>
+          <div class="card"><h3>🎒 Systeme</h3><p>Taschen, Inventare, EUP, Schlüssel und Alltagssysteme.</p></div>
+          <div class="card"><h3>🚑 AI-Medic</h3><p>Als Rettungsring gedacht — nicht als Ersatz für gutes RP.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news">
+      <div class="container split">
+        <div class="card">
+          <div class="eyebrow">News</div>
+          <h2>Aktuelles aus der Stadt</h2>
+
+          <div class="news-item">
+            <div class="news-date">Community</div>
+            <h3>Pulse Nation wächst weiter</h3>
+            <p>Wir setzen auf echte Spieler, sauberes RP und eine Community, die mitredet statt nur zuschaut.</p>
+          </div>
+
+          <div class="news-item">
+            <div class="news-date">Fraktionen</div>
+            <h3>Bewerbungen & Konzepte</h3>
+            <p>Wer Verantwortung übernehmen möchte, kann sich über Discord über Fraktionen, Firmen und Konzepte informieren.</p>
+          </div>
+
+          <div class="news-item">
+            <div class="news-date">Server</div>
+            <h3>Qualität vor Quantität</h3>
+            <p>Neue Systeme kommen nur, wenn sie Sinn ergeben. Was nicht passt, fliegt wieder raus.</p>
+          </div>
+        </div>
+
+        <div class="card" id="einreise">
+          <div class="eyebrow">Einreise</div>
+          <h2>So kommst du rein</h2>
+          <p style="margin-bottom: 22px; color:#d3d4e3;">
+            Wenn du von unserer Werbung kommst, findest du hier direkt den Weg in die Stadt.
+          </p>
+
+          <ol class="steps">
+            <li>Tritt unserem Discord bei.</li>
+            <li>Lies dir die Regeln und Einreise-Informationen durch.</li>
+            <li>Bereite deinen Charakter und deine Story vor.</li>
+            <li>Folge den Anweisungen im Discord zur Einreise.</li>
+            <li>Starte dein Leben in Pulse Nation.</li>
+          </ol>
+
+          <div class="buttons">
+            <a class="btn btn-primary" href="https://discord.gg/KxNgJFgXvh" target="_blank">Zur Einreise auf Discord</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="join">
+      <div class="container">
+        <div class="cta">
+          <h2>Wenn du ein Projekt suchst — komm vorbei.</h2>
+          <p>
+            Wenn du nur einen Server suchst, spiel woanders. Wenn du etwas suchst,
+            das sich nach Projekt anfühlt: Willkommen bei Pulse Nation Roleplay.
+          </p>
+
+          <div class="buttons" style="justify-content:center;">
+            <a class="btn btn-primary" href="https://discord.gg/KxNgJFgXvh" target="_blank">Discord beitreten</a>
+            <a class="btn btn-secondary" href="fivem://connect/DEINE-SERVER-IP">Server verbinden</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Pulse Nation Roleplay • GTA5 FiveM RP • Community statt Masse
+  </footer>
+</body>
+</html>
